@@ -1,10 +1,11 @@
 # Want to play with Pandas discretization
 
+import os
 import pandas as pd
 import matplotlib.pyplot as plt
-from numpy import np
+import numpy as np
 
-GOOGLE_DRIVE_DIR = u'C:\\Users\\e18349\\Google Drive\\Fantasy Data\\'
+DATA_DIR = 'fantasydata'
 
 PLAYER_GAME_2008_FN = u'PlayerGame.2008.csv'
 PLAYER_GAME_2009_FN = u'PlayerGame.2009.csv'
@@ -14,7 +15,10 @@ PLAYER_GAME_2012_FN = u'PlayerGame.2012.csv'
 PLAYER_GAME_2013_FN = u'PlayerGame.2013.csv'
 
 # Get player-game data for the 2013 season
-player_game_2013_df = pd.read_csv(GOOGLE_DRIVE_DIR + PLAYER_GAME_2013_FN, index_col = 89)
+player_game_2013_df = pd.read_csv(os.path.join(os.path.dirname(__file__), 
+                                               DATA_DIR, 
+                                               PLAYER_GAME_2013_FN), 
+                                  index_col = 89)
 
 # Want to analyze starting runningbacks
 rb_player_game_2013_df = player_game_2013_df[ (player_game_2013_df['Position'] == 'RB') & 
@@ -35,4 +39,6 @@ bin_size = 2*iqr*n**(-1.0/3.0)
 plt.figure()
 num_bins = (max(st_rb_fant_pts)-min(st_rb_fant_pts))/bin_size + 1
 bin_list = np.linspace(min(st_rb_fant_pts), max(st_rb_fant_pts), num_bins)
-plt.hist(st_rb_fant_pts, bin_list)
+plt.hist(st_rb_fant_pts.values, bins=bin_list)
+
+plt.show()
