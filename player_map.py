@@ -26,6 +26,14 @@ class PlayerMap:
         except IndexError:
             print "Cannot seem to find that PlayerID.  Please try again."
 
+    def get_player_names_from_list(self, id_list):
+        idx = (self.player_map_df['PlayerID'] in id_list)
+        name_list = player_map_df.ix[idx]['Name']
+        if len(name_list.index) != len(id_list):
+            print "Could not find all the players in the list."
+            
+        return name_list
+
     def get_team_from_id(self, id):
         idx = (self.player_map_df['Team'])
         try:
